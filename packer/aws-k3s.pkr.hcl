@@ -31,6 +31,12 @@ variable "packer_role_arn" {
   sensitive = false
 }
 
+variable "skip_create_ami" {
+  type      = bool
+  sensitive = false
+  default   = true
+}
+
 ####################
 # This source will create an EBS AMI from an existing AMI.
 #
@@ -41,7 +47,7 @@ variable "packer_role_arn" {
 ####################
 
 source "amazon-ebs" "ubuntu" {
-  skip_create_ami = true
+  skip_create_ami = var.skip_create_ami
   region          = var.packer_region
   access_key      = var.packer_access_key
   secret_key      = var.packer_secret_key
